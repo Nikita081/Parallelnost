@@ -2,20 +2,42 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
 	public BinaryTree() {
 	}
 
-	public class Node {
+	private class Node {
 		private Key key;
 		private Value value;
-		public Node left, right;
+		private Node left, right;
 
-		Node(Key key, Value value) {
+		private Node(Key key, Value value) {
 
 			this.key = key;
 			this.value = value;
 		}
 	}
 
-	public Node root = null;
+	private Node root = null;
 	private int counter = 0;
+
+	public Key getRootKey() {
+		return root.key;
+	}
+
+	public Key getLeftChildKey(Key k) {
+
+		Node x = treeSearchKey(k);
+		if (x.left != null) {
+			return x.left.key;
+		} else
+			return null;
+	}
+
+	public Key getRightChildKey(Key k) {
+
+		Node x = treeSearchKey(k);
+		if (x.right != null) {
+			return x.right.key;
+		} else
+			return null;
+	}
 
 	public void addNode(Key k, Value v) {
 		treeAddNode(k, v);
@@ -139,24 +161,28 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
 	}
 
 	public boolean searchKey(Key k) {
-		return treeSearchKey(k);
+		Node x = treeSearchKey(k);
+		if (x != null) {
+			return true;
+		} else
+			return false;
 	}
 
-	private boolean treeSearchKey(Key k) {
+	private Node treeSearchKey(Key k) {
 
 		Node x = root;
 
 		while (x != null) {
 			int tmp = k.compareTo(x.key);
 			if (tmp == 0) {
-				return true;
+				return x;
 			} else if (tmp < 0) {
 				x = x.left;
 			} else {
 				x = x.right;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public Value getValue(Key k) {

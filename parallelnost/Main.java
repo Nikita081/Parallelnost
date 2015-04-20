@@ -7,7 +7,7 @@ public class Main {
 		long time = System.currentTimeMillis();
 		int thread_num = 0;
 
-		thread_num = 3; // Integer.valueOf(args[1]);
+		thread_num = 5; // Integer.valueOf(args[1]);
 		int node_num = 0;
 
 		BinaryTree<Integer, Integer> my_tree = new BinaryTree<Integer, Integer>();
@@ -26,21 +26,25 @@ public class Main {
 		}
 
 		// creating queue for nodes
-		Queue<BinaryTree<Integer, Integer>.Node> queue = new LinkedList<BinaryTree<Integer, Integer>.Node>();
-		queue.add(my_tree.root);
+		Queue<Integer> queue = new LinkedList<Integer>();
+		queue.add(my_tree.getRootKey());
 
 		// master-thread starts forming tasks for the other threads, using
 		// breadth-first-search
+
 		while (!queue.isEmpty()) {
-			BinaryTree<Integer, Integer>.Node tmpNode = queue.poll();
+			int tmpKey = queue.poll();
 			node_num++;
-			if (tmpNode.left != null) {
 
-				queue.add(tmpNode.left);
+			if (my_tree.getLeftChildKey(tmpKey) != null) {
+
+				queue.add(my_tree.getLeftChildKey(tmpKey));
+
 			}
-			if (tmpNode.right != null) {
+			if (my_tree.getRightChildKey(tmpKey) != null) {
 
-				queue.add(tmpNode.right);
+				queue.add(my_tree.getRightChildKey(tmpKey));
+
 				if (queue.size() == thread_num) {
 					break;
 				}
@@ -53,7 +57,7 @@ public class Main {
 
 		// give work
 		for (int i = 0; i < thread_num; i++) {
-			counter[i] = new Count(queue.poll());
+			counter[i] = new Count(queue.poll(), my_tree);
 			thread[i] = new Thread(counter[i]);
 			thread[i].start();
 		}
