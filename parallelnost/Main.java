@@ -4,7 +4,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		long time = System.currentTimeMillis();
+	    long time = System.currentTimeMillis();
 		int thread_num = 0;
 
 		thread_num = 5; // Integer.valueOf(args[1]);

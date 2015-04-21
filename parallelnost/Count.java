@@ -1,14 +1,14 @@
 public class Count implements Runnable {
-	int starter;
-	int result = 0;
-	BinaryTree<Integer, Integer> tree = new BinaryTree<Integer, Integer>();
+	private	int starter;
+	private	int result = 0;
+	private BinaryTree<Integer, Integer> tree = new BinaryTree<Integer, Integer>();
 
 	public Count(int starter, BinaryTree<Integer, Integer> tree) {
 		this.starter = starter;
 		this.tree = tree;
 	}
 
-	public int countNumber(int key) {
+	private int countNumber(int key) {
 
 		if (tree.getLeftChildKey(key) != null) {
 			countNumber(tree.getLeftChildKey(key));
